@@ -1,0 +1,61 @@
+$threshold: 60%;
+
+@function contrast-color($color, $dark, $light) {
+  @return if(lightness($color) < $threshold, $light, $dark)
+}
+
+@mixin color-variations($name, $color, $paper, $contrast) {
+    --#{$name}: #{$color};
+    $pale: mix($paper, $color, 90%);
+    --#{$name}-dark: #{mix($color, $contrast, 90%)};
+    --#{$name}-darker: #{mix($color, $contrast, 80%)};
+
+    $text-dark: if(lightness($paper) < 50%, $paper, $contrast);
+    $text-light: if(lightness($paper) < 50%, $contrast, $paper);
+
+    .surface-#{$name} {
+        --surface-bg: var(--#{$name});
+        --surface-bg-dark: var(--#{$name}-dark);
+        --surface-bg-darker: var(--#{$name}-darker);
+        --surface-text: #{contrast-color($color, $text-dark, $text-light)};
+    }
+}
+
+@mixin theme($paper, $contrast, $primary, $secondary) {
+    $text-dark: if(lightness($paper) < 50%, $paper, $contrast);
+    $text-light: if(lightness($paper) < 50%, $contrast, $paper);
+
+    --neutral-10: #{mix($paper, $contrast, 90%)};
+    --neutral-20: #{mix($paper, $contrast, 80%)};
+
+    --text-light: #{$text-light};
+    --text-dark: #{$text-dark};
+    --app-bg: var(--neutral-20);
+
+    $primary-pale: mix($primary, $paper, 15%);
+    $secondary-pale: mix($secondary, $paper, 15%);
+    $neutral: #{mix($paper, $contrast, 80%)};
+
+    @include color-variations('paper', $paper, $paper, $contrast);
+    @include color-variations('primary', $primary, $paper, $contrast);
+    @include color-variations('secondary', $secondary, $paper, $contrast);
+    @include color-variations('contrast', $contrast, $paper, $contrast);
+    @include color-variations('primary-pale', $primary-pale, $paper, $contrast);
+    @include color-variations('secondary-pale', $secondary-pale, $paper, $contrast);
+}
+
+.theme-sun {
+    @include theme(#fff, #31393cff, #2176ffff, rgb(255, 235, 85));
+}
+
+.theme-sun-dark {
+    @include theme(#31393cff, #fff, #2176ffff, #f79824ff);
+}
+
+.theme-love {
+    @include theme(#fff, #303240, #007bbd, #65a300);
+}
+
+.theme-love-dark {
+    @include theme(#303240, #fff, #007bbd, #65a300);
+}

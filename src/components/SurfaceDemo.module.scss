@@ -1,0 +1,40 @@
+.root {
+    width: 200px;
+    background: var(--surface-bg);
+    color: var(--surface-text);
+    margin: 8px;
+    border-radius: 3px;
+}
+
+.row {
+    padding: 3px 6px;
+    min-height: 24px;
+    display: flex;
+    gap: 3px;
+    background-color: var(--surface-bg);
+    color: var(--surface-text);
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--surface-bg-dark);
+    }
+
+    &:active {
+        background-color: var(--surface-bg-darker);
+    }
+}
+
+.button {
+    padding: 3px;
+    background-color: var(--surface-bg);
+    color: var(--surface-text);
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--surface-bg-dark);
+    }
+
+    &:active {
+        background-color: var(--surface-bg-darker);
+    }
+}
